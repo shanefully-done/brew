@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRecipes } from "@/hooks/use-recipes";
 import { Recipe } from "@/lib/types";
 import { RecipeCard } from "@/components/recipe-card";
+import { ConfigButton } from "@/components/config-button";
 import { Button } from "@/components/ui/button";
 import {
 	Accordion,
@@ -45,10 +46,11 @@ export function RecipeList() {
 	return (
 		<div className="w-full max-w-2xl mx-auto">
 			<div className="flex flex-wrap justify-end mb-4 gap-2">
-				<ImportExport />
 				<Link href="/recipe/new">
 					<Button>New Recipe</Button>
 				</Link>
+				<ConfigButton />
+				<ImportExport />
 				<AlertDialog>
 					<AlertDialogTrigger asChild>
 						<Button variant="destructive">Reset App</Button>

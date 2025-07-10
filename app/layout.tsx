@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
-import { AudioPlayerProvider } from "@/components/audio-player-context";
+import { FeedbackProvider } from "@/components/feedback-context";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -49,19 +49,19 @@ export default function RootLayout({
 				<link rel="manifest" href="/site.webmanifest" />
 			</head>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<AudioPlayerProvider>
+				<FeedbackProvider>
 					<ThemeProvider
 						attribute="class"
 						defaultTheme="system"
 						enableSystem
 						disableTransitionOnChange
 					>
-						<div className="mx-auto max-w-3xl p-4">
+						<div className="mx-auto p-4">
 							<Header />
 							{children}
 						</div>
 					</ThemeProvider>
-				</AudioPlayerProvider>
+				</FeedbackProvider>
 			</body>
 		</html>
 	);

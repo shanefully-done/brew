@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useAudioPlayer } from "@/components/audio-player-context";
+import { useFeedback } from "@/components/feedback-context";
 
 interface RecipeDetailViewProps {
 	id: string;
@@ -35,7 +35,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 	const [isRunning, setIsRunning] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const isInitialMount = useRef(true); // Ref to track initial mount
-	const { playSound } = useAudioPlayer(); // Get playSound from context
+	const { playSound, vibrate } = useFeedback(); // Get playSound and vibrate from context
 
 	const totalRecipeDuration = recipe
 		? (recipe.stages?.reduce((acc, stage) => acc + (stage.duration || 0), 0) ||
@@ -130,6 +130,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 			timeRemaining !== 0
 		) {
 			playSound();
+			vibrate();
 		}
 
 		// Special case for the very last stage (drain time or last regular stage)
@@ -141,6 +142,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 			currentStageIndex === recipe.stages.length
 		) {
 			playSound();
+			vibrate();
 		}
 	}, [
 		timeRemaining,
@@ -149,6 +151,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 		totalRecipeDuration,
 		isRunning,
 		playSound,
+		vibrate,
 	]);
 
 	// Effect to play sound when currentStageIndex changes, but not on initial mount

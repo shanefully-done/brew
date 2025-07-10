@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
 import { RecipeDetailView } from "@/components/recipe-detail-view";
-import { useAudioPlayer } from "@/components/audio-player-context";
+import { useFeedback } from "@/components/feedback-context";
 
 interface RecipeDetailWithSoundProps {
 	id: string;
 }
 
 export function RecipeDetailWithSound({ id }: RecipeDetailWithSoundProps) {
-	const { playSound } = useAudioPlayer();
+	useFeedback(); // Call useFeedback to ensure context is initialized
 
 	return <RecipeDetailView id={id} />;
 }
