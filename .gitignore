@@ -2,6 +2,8 @@
 
 # tool configs
 .kilocode
+docs/
+tasks/
 
 # dependencies
 /node_modules
