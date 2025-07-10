@@ -45,30 +45,11 @@ export function RecipeList() {
 
 	return (
 		<div className="w-full max-w-2xl mx-auto">
-			<div className="flex flex-wrap justify-end mb-4 gap-2">
+			<div className="flex flex-wrap justify-end gap-2">
 				<Link href="/recipe/new">
 					<Button>New Recipe</Button>
 				</Link>
 				<ConfigButton />
-				<ImportExport />
-				<AlertDialog>
-					<AlertDialogTrigger asChild>
-						<Button variant="destructive">Reset App</Button>
-					</AlertDialogTrigger>
-					<AlertDialogContent>
-						<AlertDialogHeader>
-							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-							<AlertDialogDescription>
-								This action cannot be undone. This will permanently delete all your
-								custom recipes and restore the application to its default state.
-							</AlertDialogDescription>
-						</AlertDialogHeader>
-						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction onClick={resetRecipes}>Reset</AlertDialogAction>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
 			</div>
 			{Object.keys(groupedRecipes).length === 0 ? (
 				<p>No recipes found. Add some recipes to get started!</p>
@@ -95,6 +76,27 @@ export function RecipeList() {
 					))}
 				</Accordion>
 			)}
+			<div className="flex flex-wrap justify-end mt-4 gap-2">
+				<ImportExport />
+				<AlertDialog>
+					<AlertDialogTrigger asChild>
+						<Button variant="destructive">Reset App</Button>
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+							<AlertDialogDescription>
+								This action cannot be undone. This will permanently delete all your
+								custom recipes and restore the application to its default state.
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction onClick={resetRecipes}>Reset</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			</div>
 		</div>
 	);
 }
