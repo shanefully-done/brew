@@ -1,24 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# brew.
+
+A mobile-first web application for home brewers to follow, customize, and time filter coffee recipes. Designed for touch-friendly use during brewing, with support for multiple methods, multi-stage pours, and recipe sharing via `localStorage`.
+
+## Features
+
+### Recipe Viewer & Timer
+
+- Displays a brewing recipe including: Brewer type, Coffee dose (g), Water weight (ml), Ratio, Temperature (°C), Grind size, Bloom time, Multi-stage pour schedule (stage name, water weight, duration), and Drain time.
+- Central **countdown timer** that changes color based on the current stage.
+- Auto-progresses by default with an optional manual mode to advance stages.
+- Provides audio cues at each stage transition.
+
+### Custom Recipe Editor
+
+- Create and edit recipes via a structured UI.
+- Input fields for brewer type, coffee dose, water weight, ratio (linked), temperature, bloom time, drain time, and grind size.
+- Functionality to add/remove multi-stage pour stages.
+- Recipes are stored in `localStorage` and are versioned JSON.
+- Can export all recipes as a single `.json` file.
+- Can import recipes via `.json` file or raw paste.
+
+### Recipe Management
+
+- View a list of saved recipes, grouped by brewer type.
+- Options to tap to start brewing, edit, or delete recipes.
+- Includes placeholder default recipes per brewer.
+
+### Timer Screen
+
+- Minimal, full-screen countdown display.
+- Highlights the current stage.
+- Integrates audio cues (short chime or beep).
+- Fluid animation for time flow (e.g., progress ring).
+- Manual pause/next functionality available if auto-progress is off.
+
+## Technologies Used
+
+- **Platform**: Next.js (App Router)
+- **Frontend Only**: No backend or database
+- **UI Library**: shadcn/ui
+- **Runtime**: Bun
+- **Language**: TypeScript
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
