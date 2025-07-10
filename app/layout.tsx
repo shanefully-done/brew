@@ -17,7 +17,32 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: "brew.",
-	description: "a simple coffee timer.",
+	description: "A simple coffee recipe & timer app for home brewers.",
+	openGraph: {
+		title: "brew.",
+		description: "A simple coffee recipe & timer app for home brewers.",
+		url: "https://brew.ixtj.dev",
+		siteName: "brew.",
+		images: [
+			{
+				url: "/og.png",
+				width: 1200,
+				height: 630,
+				alt: "brew. – coffee timer app",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "brew.",
+		description: "A simple coffee recipe & timer app for home brewers.",
+		images: ["/og.png"],
+	},
+	icons: {
+		icon: "/favicon.svg",
+	},
 };
 
 export default function RootLayout({
@@ -46,6 +71,7 @@ export default function RootLayout({
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 				<link rel="shortcut icon" href="/favicon/favicon.ico" />
+				<link rel="shortcut icon" href="/favicon.svg" />
 				<link rel="manifest" href="/site.webmanifest" />
 			</head>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
