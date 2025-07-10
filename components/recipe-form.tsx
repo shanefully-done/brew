@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { v4 as uuidv4 } from "uuid";
@@ -24,7 +24,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 const recipeFormSchema = z.object({
-	id: z.string().optional(),
+	id: z.string(), // Made id required to help with type inference
 	name: z.string().optional(),
 	brewer: z.string().optional(),
 	dose: z.coerce.number().optional(),
@@ -58,10 +58,11 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 	const { addRecipe, updateRecipe } = useRecipes();
 
 	const form = useForm<RecipeFormValues>({
-		resolver: zodResolver(recipeFormSchema),
+		resolver: zodResolver(recipeFormSchema) as Resolver<RecipeFormValues>, // Explicitly cast resolver type
 		defaultValues: initialRecipe
 			? {
 					...initialRecipe,
+					id: initialRecipe.id, // Ensure id is explicitly set for existing recipes
 					stages:
 						initialRecipe.stages?.map((stage) => ({
 							...stage,
@@ -69,6 +70,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 						})) || [],
 			  }
 			: {
+					id: uuidv4(), // Generate a new ID for new recipes
 					name: "",
 					brewer: "",
 					dose: undefined,
