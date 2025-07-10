@@ -109,6 +109,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 			addRecipe(values as Recipe);
 		}
 		router.push("/"); // Navigate back to recipe list
+		// playSound(); // This would play the sound on form submission
 	};
 
 	return (

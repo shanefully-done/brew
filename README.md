@@ -47,7 +47,7 @@ A mobile-first web application for home brewers to follow, customize, and time f
 First, run the development server:
 
 ```bash
-bun dev
+bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -66,3 +66,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# Credits
+
+- UI Completed Status Alert Notification SFX001.wav by Headphaze -- https://freesound.org/s/277033/ -- License: Attribution 4.0

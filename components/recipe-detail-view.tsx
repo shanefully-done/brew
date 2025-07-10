@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useAudioPlayer } from "@/components/audio-player-context";
 
 interface RecipeDetailViewProps {
 	id: string;
@@ -33,6 +34,9 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 	const [currentStageIndex, setCurrentStageIndex] = useState(0);
 	const [isRunning, setIsRunning] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
+	const isInitialMount = useRef(true); // Ref to track initial mount
+	const { playSound } = useAudioPlayer(); // Get playSound from context
+
 	const totalRecipeDuration = recipe
 		? (recipe.stages?.reduce((acc, stage) => acc + (stage.duration || 0), 0) ||
 				0) + (recipe.drainTime || 0)
@@ -88,6 +92,66 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 			}
 		}
 	}, [timeRemaining, recipe, totalRecipeDuration]);
+
+	// Effect to play sound when a stage completes
+	useEffect(() => {
+		if (isInitialMount.current) {
+			isInitialMount.current = false;
+			return; // Do not play sound on initial mount
+		}
+
+		if (!recipe || !recipe.stages) {
+			return;
+		}
+
+		let cumulativeDurationOfPreviousStages = 0;
+		for (let i = 0; i < currentStageIndex; i++) {
+			if (recipe.stages[i]) {
+				cumulativeDurationOfPreviousStages += recipe.stages[i].duration || 0;
+			}
+		}
+
+		let currentStageDuration = 0;
+		if (currentStageIndex < recipe.stages.length) {
+			currentStageDuration = recipe.stages[currentStageIndex].duration || 0;
+		} else if (currentStageIndex === recipe.stages.length && recipe.drainTime) {
+			currentStageDuration = recipe.drainTime;
+		}
+
+		const timeWhenCurrentStageEnds =
+			totalRecipeDuration -
+			(cumulativeDurationOfPreviousStages + currentStageDuration);
+
+		// Play sound if timeRemaining is exactly at the point where the current stage ends
+		// And it's not the very end of the recipe (timeRemaining === 0) unless it's the last stage completion
+		if (
+			isRunning &&
+			timeRemaining === timeWhenCurrentStageEnds &&
+			timeRemaining !== 0
+		) {
+			playSound();
+		}
+
+		// Special case for the very last stage (drain time or last regular stage)
+		// When timeRemaining becomes 0, it means the entire recipe is complete.
+		// The sound should play for the completion of the *last* stage.
+		if (
+			isRunning &&
+			timeRemaining === 0 &&
+			currentStageIndex === recipe.stages.length
+		) {
+			playSound();
+		}
+	}, [
+		timeRemaining,
+		currentStageIndex,
+		recipe,
+		totalRecipeDuration,
+		isRunning,
+		playSound,
+	]);
+
+	// Effect to play sound when currentStageIndex changes, but not on initial mount
 
 	const handleSkipStage = () => {
 		if (!recipe || !recipe.stages || currentStageIndex >= recipe.stages.length) {

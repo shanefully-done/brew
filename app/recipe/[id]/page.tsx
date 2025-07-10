@@ -1,4 +1,4 @@
-import { RecipeDetailView } from "@/components/recipe-detail-view";
+import { RecipeDetailWithSound } from "@/components/recipe-detail-with-sound";
 
 interface RecipePageProps {
 	params: Promise<{
@@ -10,7 +10,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
 	const resolvedParams = await params;
 	return (
 		<div className="container mx-auto p-4">
-			<RecipeDetailView id={resolvedParams.id} />
+			<RecipeDetailWithSound id={resolvedParams.id} />
 		</div>
 	);
 }
