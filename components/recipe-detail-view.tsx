@@ -33,6 +33,10 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 	const [currentStageIndex, setCurrentStageIndex] = useState(0);
 	const [isRunning, setIsRunning] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
+	const totalRecipeDuration = recipe
+		? (recipe.stages?.reduce((acc, stage) => acc + (stage.duration || 0), 0) ||
+				0) + (recipe.drainTime || 0)
+		: 0;
 
 	useEffect(() => {
 		if (recipe) {
@@ -83,7 +87,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 				}
 			}
 		}
-	}, [timeRemaining, recipe]);
+	}, [timeRemaining, recipe, totalRecipeDuration]);
 
 	const handleSkipStage = () => {
 		if (!recipe || !recipe.stages || currentStageIndex >= recipe.stages.length) {
@@ -136,9 +140,6 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 		return <div>Recipe not found.</div>;
 	}
 
-	const totalRecipeDuration =
-		(recipe.stages?.reduce((acc, stage) => acc + (stage.duration || 0), 0) || 0) +
-		(recipe.drainTime || 0);
 	const progressValue =
 		totalRecipeDuration > 0
 			? ((totalRecipeDuration - timeRemaining) / totalRecipeDuration) * 100
