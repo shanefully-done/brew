@@ -15,7 +15,7 @@ import {
 
 export function LocaleSwitcher() {
 	const router = useRouter();
-	const { locale, setLocale } = useLocale();
+	const { setLocale } = useLocale();
 
 	const handleLocaleChange = (newLocale: string) => {
 		setLocale(newLocale);
