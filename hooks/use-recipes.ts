@@ -8,6 +8,106 @@ const LOCAL_STORAGE_KEY = "coffee-recipes";
 const defaultRecipes: Recipe[] = [
 	{
 		id: uuidv4(),
+		name: "Single",
+		brewer: "Mr. Clever",
+		dose: 10,
+		water: 150,
+		ratio: "1:15",
+		temperature: 92,
+		grindSize: "Pourover",
+		drainTime: 30,
+		stages: [
+			{
+				name: "Bloom",
+				water: 20,
+				duration: 30,
+				instructions: "-",
+			},
+			{
+				name: "Brew",
+				water: 130,
+				duration: 120,
+				instructions: "Stir after pouring all of the water.",
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: "Singe: Ice",
+		brewer: "Mr. Clever",
+		dose: 13,
+		water: 150,
+		ratio: "1:11.54",
+		temperature: 92,
+		grindSize: "Pourover",
+		drainTime: 30,
+		stages: [
+			{
+				name: "Bloom",
+				water: 26,
+				duration: 30,
+				instructions: "-",
+			},
+			{
+				name: "Brew",
+				water: 124,
+				duration: 120,
+				instructions: "Stir after pouring all of the water.",
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: "Double",
+		brewer: "Mr. Clever",
+		dose: 20,
+		water: 250,
+		ratio: "1:15",
+		temperature: 92,
+		grindSize: "Pourover",
+		drainTime: 30,
+		stages: [
+			{
+				name: "Bloom",
+				water: 40,
+				duration: 30,
+				instructions: "-",
+			},
+			{
+				name: "Brew",
+				water: 260,
+				duration: 120,
+				instructions: "Stir thoroughly after pouring.",
+			},
+		],
+	},
+	{
+		id: uuidv4(),
+		name: "Double: Ice",
+		brewer: "Mr. Clever",
+		dose: 26,
+		water: 250,
+		ratio: "1:11.54",
+		temperature: 92,
+		grindSize: "Pourover",
+		drainTime: 30,
+		stages: [
+			{
+				name: "Bloom",
+				water: 52,
+				duration: 30,
+				instructions: "-",
+			},
+			{
+				name: "Brew",
+				water: 248,
+				duration: 120,
+				instructions: "Stir thoroughly after pouring.",
+			},
+		],
+	},
+	{
+		id: uuidv4(),
 		name: "Classic V60",
 		brewer: "V60",
 		dose: 18,
@@ -15,7 +115,6 @@ const defaultRecipes: Recipe[] = [
 		ratio: "1:16.6",
 		temperature: 93,
 		grindSize: "medium-fine",
-		bloomTime: 30,
 		drainTime: 60,
 		stages: [
 			{
@@ -47,65 +146,11 @@ const defaultRecipes: Recipe[] = [
 		ratio: "1:16.6",
 		temperature: 85,
 		grindSize: "medium",
-		bloomTime: 0,
 		drainTime: 90,
 		stages: [
 			{ name: "Pour", water: 250, duration: 60, instructions: "Pour all water." },
 		],
 	},
-	{
-		id: uuidv4(),
-		name: "Single",
-		brewer: "Mr. Clever",
-		dose: 10,
-		water: 150,
-		ratio: "1:15",
-		temperature: 92,
-		grindSize: "Pourover",
-		bloomTime: 30,
-		drainTime: 30,
-		stages: [
-			{
-				name: "Bloom",
-				water: 20,
-				duration: 30,
-				instructions: "-",
-			},
-			{
-				name: "Brew",
-				water: 130,
-				duration: 120,
-				instructions: "Stir after pouring all of the water.",
-			},
-		],
-	},
-	{
-		id: uuidv4(),
-		name: "Singe: Ice",
-		brewer: "Mr. Clever",
-		dose: 13,
-		water: 150,
-		ratio: "1:11.54",
-		temperature: 92,
-		grindSize: "Pourover",
-		bloomTime: 30,
-		drainTime: 30,
-		stages: [
-			{
-				name: "Bloom",
-				water: 26,
-				duration: 30,
-				instructions: "-",
-			},
-			{
-				name: "Brew",
-				water: 124,
-				duration: 120,
-				instructions: "Stir after pouring all of the water.",
-			},
-		],
-	},
-
 	{
 		id: uuidv4(),
 		name: "Classic Chemex",
@@ -115,7 +160,6 @@ const defaultRecipes: Recipe[] = [
 		ratio: "1:16.6",
 		temperature: 94,
 		grindSize: "medium-coarse",
-		bloomTime: 45,
 		drainTime: 90,
 		stages: [
 			{
@@ -147,7 +191,6 @@ const defaultRecipes: Recipe[] = [
 		ratio: "1:16",
 		temperature: 92,
 		grindSize: "medium",
-		bloomTime: 30,
 		drainTime: 60,
 		stages: [
 			{
@@ -179,7 +222,6 @@ const defaultRecipes: Recipe[] = [
 		ratio: "1:16.6",
 		temperature: 93,
 		grindSize: "coarse",
-		bloomTime: 0,
 		drainTime: 0,
 		stages: [
 			{
@@ -193,58 +235,6 @@ const defaultRecipes: Recipe[] = [
 				water: 0,
 				duration: 30,
 				instructions: "Plunge slowly after 4 minutes.",
-			},
-		],
-	},
-	{
-		id: uuidv4(),
-		name: "Double",
-		brewer: "Mr. Clever",
-		dose: 20,
-		water: 300,
-		ratio: "1:15",
-		temperature: 92,
-		grindSize: "Pourover",
-		bloomTime: 30,
-		drainTime: 30,
-		stages: [
-			{
-				name: "Bloom",
-				water: 40,
-				duration: 30,
-				instructions: "-",
-			},
-			{
-				name: "Brew",
-				water: 260,
-				duration: 150,
-				instructions: "Stir thoroughly after pouring.",
-			},
-		],
-	},
-	{
-		id: uuidv4(),
-		name: "Double: Ice",
-		brewer: "Mr. Clever",
-		dose: 26,
-		water: 300,
-		ratio: "1:11.54",
-		temperature: 92,
-		grindSize: "Pourover",
-		bloomTime: 30,
-		drainTime: 30,
-		stages: [
-			{
-				name: "Bloom",
-				water: 52,
-				duration: 30,
-				instructions: "-",
-			},
-			{
-				name: "Brew",
-				water: 248,
-				duration: 150,
-				instructions: "Stir thoroughly after pouring.",
 			},
 		],
 	},

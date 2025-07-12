@@ -22,6 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useLocale } from "@/hooks/use-locale";
 
 const recipeFormSchema = z.object({
 	id: z.string(), // Made id required to help with type inference
@@ -32,7 +33,6 @@ const recipeFormSchema = z.object({
 	ratio: z.string().optional(),
 	temperature: z.coerce.number().optional(),
 	grindSize: z.string().optional(),
-	bloomTime: z.coerce.number().optional(),
 	drainTime: z.coerce.number().optional(),
 	stages: z
 		.array(
@@ -54,6 +54,7 @@ interface RecipeFormProps {
 }
 
 export function RecipeForm({ initialRecipe }: RecipeFormProps) {
+	const { dict } = useLocale();
 	const router = useRouter();
 	const { addRecipe, updateRecipe } = useRecipes();
 
@@ -78,7 +79,6 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 					ratio: "",
 					temperature: undefined,
 					grindSize: "",
-					bloomTime: undefined,
 					drainTime: undefined,
 					stages: [],
 			  },
@@ -115,7 +115,11 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 	return (
 		<Card className="w-full max-w-2xl mx-auto">
 			<CardHeader>
-				<CardTitle>{initialRecipe ? "Edit Recipe" : "Create New Recipe"}</CardTitle>
+				<CardTitle>
+					{initialRecipe
+						? dict?.recipe?.titleEdit || "Edit Recipe"
+						: dict?.recipe?.titleNew || "Create New Recipe"}
+				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
@@ -125,7 +129,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Recipe Name</FormLabel>
+									<FormLabel>{dict?.recipe?.name || "Recipe Name"}</FormLabel>
 									<FormControl>
 										<Input {...field} />
 									</FormControl>
@@ -138,7 +142,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 							name="brewer"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Brewer</FormLabel>
+									<FormLabel>{dict?.recipe?.brewer || "Brewer"}</FormLabel>
 									<FormControl>
 										<Input {...field} />
 									</FormControl>
@@ -152,7 +156,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 								name="dose"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Dose (g)</FormLabel>
+										<FormLabel>{dict?.recipe?.dosage || "Dose (g)"}</FormLabel>
 										<FormControl>
 											<Input type="number" {...field} />
 										</FormControl>
@@ -165,7 +169,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 								name="water"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Water (ml)</FormLabel>
+										<FormLabel>{dict?.recipe?.water || "Water (ml)"}</FormLabel>
 										<FormControl>
 											<Input type="number" {...field} />
 										</FormControl>
@@ -180,7 +184,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 								name="ratio"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Ratio (e.g., 1:16.6)</FormLabel>
+										<FormLabel>{dict?.recipe?.ratio || "Ratio (e.g., 1:16.6)"}</FormLabel>
 										<FormControl>
 											<Input {...field} />
 										</FormControl>
@@ -193,7 +197,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 								name="temperature"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Temperature (°C)</FormLabel>
+										<FormLabel>{dict?.recipe?.temp || "Temperature (°C)"}</FormLabel>
 										<FormControl>
 											<Input type="number" {...field} />
 										</FormControl>
@@ -208,22 +212,9 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 								name="grindSize"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Grind Size</FormLabel>
+										<FormLabel>{dict?.recipe?.grind || "Grind Size"}</FormLabel>
 										<FormControl>
 											<Input {...field} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="bloomTime"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Bloom Time (s)</FormLabel>
-										<FormControl>
-											<Input type="number" {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -235,7 +226,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 							name="drainTime"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Drain Time (s)</FormLabel>
+									<FormLabel>{dict?.recipe?.drain || "Drain Time (s)"}</FormLabel>
 									<FormControl>
 										<Input type="number" {...field} />
 									</FormControl>
@@ -246,19 +237,25 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 
 						<Separator />
 
-						<h3 className="text-lg font-semibold mb-4">Stages</h3>
+						<h3 className="text-lg font-semibold mb-4">
+							{dict?.recipe?.stage?.title || "Stages"}
+						</h3>
 						<div className="space-y-4">
 							{fields.map((field, index) => (
 								<Card key={field.id} className="p-4">
 									<div className="flex justify-between items-center mb-4">
-										<h4 className="font-medium">Stage {index + 1}</h4>
+										<h4 className="font-medium">
+											{dict?.recipe?.stage?.name
+												? `${index + 1} ${dict.recipe.stage.name}`
+												: `Stage ${index + 1}`}
+										</h4>
 										<Button
 											type="button"
 											variant="destructive"
 											size="sm"
 											onClick={() => remove(index)}
 										>
-											Remove Stage
+											{dict.recipe.stage.remove}
 										</Button>
 									</div>
 									<FormField
@@ -266,7 +263,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 										name={`stages.${index}.name`}
 										render={({ field }) => (
 											<FormItem>
-												<FormLabel>Stage Name</FormLabel>
+												<FormLabel>{dict.recipe.stage.name}</FormLabel>
 												<FormControl>
 													<Input {...field} />
 												</FormControl>
@@ -280,7 +277,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 											name={`stages.${index}.water`}
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Water (ml)</FormLabel>
+													<FormLabel>{dict.recipe.water}</FormLabel>
 													<FormControl>
 														<Input type="number" {...field} />
 													</FormControl>
@@ -293,7 +290,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 											name={`stages.${index}.duration`}
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Duration (s)</FormLabel>
+													<FormLabel>{dict.recipe.stage.duration}</FormLabel>
 													<FormControl>
 														<Input type="number" {...field} />
 													</FormControl>
@@ -307,7 +304,7 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 										name={`stages.${index}.instructions`}
 										render={({ field }) => (
 											<FormItem className="mt-4">
-												<FormLabel>Instructions</FormLabel>
+												<FormLabel>{dict.recipe.stage.instruction}</FormLabel>
 												<FormControl>
 													<Textarea {...field} />
 												</FormControl>
@@ -332,11 +329,11 @@ export function RecipeForm({ initialRecipe }: RecipeFormProps) {
 							variant="outline"
 							className="w-full"
 						>
-							Add Stage
+							{dict.recipe.stage.add}
 						</Button>
 
 						<Button type="submit" className="w-full">
-							{initialRecipe ? "Save Changes" : "Create Recipe"}
+							{dict.recipe.create}
 						</Button>
 					</form>
 				</Form>

@@ -7,7 +7,6 @@ export interface Recipe {
 	ratio?: string;
 	temperature?: number;
 	grindSize?: string;
-	bloomTime?: number;
 	drainTime?: number;
 	stages?: Array<{
 		id?: string;

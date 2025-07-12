@@ -25,12 +25,14 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useLocale } from "@/hooks/use-locale";
 
 interface GroupedRecipes {
 	[brewer: string]: Recipe[];
 }
 
 export function RecipeList() {
+	const { dict } = useLocale();
 	const { recipes, duplicateRecipe, deleteRecipe, resetRecipes } = useRecipes();
 
 	const groupedRecipes = recipes.reduce((acc: GroupedRecipes, recipe) => {
@@ -47,7 +49,7 @@ export function RecipeList() {
 		<div className="w-full max-w-2xl mx-auto">
 			<div className="flex flex-wrap justify-end gap-2">
 				<Link href="/recipe/new">
-					<Button>New Recipe</Button>
+					<Button>{dict?.buttons?.newRecipe || "New Recipe"}</Button>
 				</Link>
 				<ConfigButton />
 			</div>
@@ -80,19 +82,27 @@ export function RecipeList() {
 				<ImportExport />
 				<AlertDialog>
 					<AlertDialogTrigger asChild>
-						<Button variant="destructive">Reset App</Button>
+						<Button variant="destructive">
+							{dict?.buttons?.reset || "Reset App"}
+						</Button>
 					</AlertDialogTrigger>
 					<AlertDialogContent>
 						<AlertDialogHeader>
-							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+							<AlertDialogTitle>
+								{dict?.reset?.title || "Are you absolutely sure?"}
+							</AlertDialogTitle>
 							<AlertDialogDescription>
-								This action cannot be undone. This will permanently delete all your
-								custom recipes and restore the application to its default state.
+								{dict?.reset?.desc ||
+									"This action cannot be undone. This will permanently delete all your custom recipes and restore the application to its default state."}
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction onClick={resetRecipes}>Reset</AlertDialogAction>
+							<AlertDialogCancel>
+								{dict?.buttons?.cancel || "Cancel"}
+							</AlertDialogCancel>
+							<AlertDialogAction onClick={resetRecipes}>
+								{dict?.buttons?.reset || "Reset"}
+							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>
 				</AlertDialog>

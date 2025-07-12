@@ -1,0 +1,89 @@
+{
+	"common": {
+		"loading": "Loading...",
+		"error": "An error occurred",
+		"success": "Success!"
+	},
+	"navigation": {
+		"home": "Home",
+		"about": "About",
+		"contact": "Contact"
+	},
+	"header": {
+		"title": "brew.",
+		"byline": "by shane."
+	},
+	"buttons": {
+		"submit": "Submit",
+		"cancel": "Cancel",
+		"save": "Save",
+		"newRecipe": "New Recipe",
+		"config": "Settings",
+		"export": "Export Recipes",
+		"import": "Import Recipes",
+		"reset": "Reset",
+		"dupe": "Copy",
+		"remove": "Remove"
+	},
+	"config": {
+		"title": "Feedback Settings",
+		"desc": "Manage sound and vibration feedback.",
+		"sound": "Sound",
+		"vibration": "Vibration"
+	},
+	"card": {
+		"brewer": "Brewer",
+		"dose": "Dose",
+		"water": "Water",
+		"totalTime": "Time"
+	},
+	"reset": {
+		"title": "Are you absolutely sure?",
+		"desc": "This action cannot be undone. This will permanently delete all your custom recipes and restore the application to its default state."
+	},
+	"recipe": {
+		"titleNew": "Create New Recipe",
+		"titleEdit": "Edit Recipe",
+		"name": "Recipe Name",
+		"brewer": "Brewer",
+		"dosage": "Dose (g)",
+		"water": "Water (mL)",
+		"ratio": "Ratio (e.g., 1:16)",
+		"temp": "Temperature (°C)",
+		"grind": "Grind Size",
+		"drain": "Drain Time (s)",
+		"stage": {
+			"title": "Stages",
+			"name": "Stage Name",
+			"duration": "Duration (s)",
+			"instruction": "Instructions",
+			"add": "Add Stage",
+			"remove": "Remove Stage"
+		},
+		"create": "Save Recipe"
+	},
+	"cardRemove": {
+		"title": "Are you absolutely sure?",
+		"desc": "This action cannot be undone. This will permanently delete your recipe."
+	},
+	"detail": {
+		"brewer": "Brewer",
+		"dosage": "Dose",
+		"water": "Water",
+		"ratio": "Ratio",
+		"temp": "Temperature",
+		"grind": "Grind Size",
+		"timer": "Timer",
+		"start": "Start",
+		"pause": "Pause",
+		"reset": "Reset",
+		"skip": "Skip Stage",
+		"currStage": "Current Stage",
+		"name": "Name",
+		"instruction": "Instructions",
+		"allStage": "All Stages",
+		"noStage": "No active stage.",
+		"drain": "Drain",
+		"drainInstruction": "Drain coffee from the brewer"
+	}
+}

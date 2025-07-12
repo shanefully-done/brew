@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRecipes } from "@/hooks/use-recipes";
 import { Recipe } from "@/lib/types";
+import { useLocale } from "@/hooks/use-locale";
 
 export function ImportExport() {
+	const { dict } = useLocale();
 	const { recipes, importRecipes } = useRecipes();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +46,9 @@ export function ImportExport() {
 
 	return (
 		<div className="flex space-x-2">
-			<Button onClick={handleExport}>Export Recipes</Button>
+			<Button onClick={handleExport}>
+				{dict?.buttons?.export || "Export Recipes"}
+			</Button>
 			<Input
 				type="file"
 				accept=".json"
@@ -52,7 +56,9 @@ export function ImportExport() {
 				onChange={handleImport}
 				className="hidden"
 			/>
-			<Button onClick={() => fileInputRef.current?.click()}>Import Recipes</Button>
+			<Button onClick={() => fileInputRef.current?.click()}>
+				{dict?.buttons?.import || "Import Recipes"}
+			</Button>
 		</div>
 	);
 }

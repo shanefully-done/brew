@@ -19,6 +19,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Recipe } from "@/lib/types";
+import { useLocale } from "@/hooks/use-locale";
 
 interface RecipeCardProps {
 	recipe: Recipe;
@@ -27,6 +28,8 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe, onDuplicate, onDelete }: RecipeCardProps) {
+	const { dict } = useLocale();
+
 	return (
 		<Card className="w-full max-w-sm">
 			<Link href={`/recipe/${recipe.id}`}>
@@ -34,31 +37,56 @@ export function RecipeCard({ recipe, onDuplicate, onDelete }: RecipeCardProps) {
 					<CardTitle>{recipe.name}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p>Brewer: {recipe.brewer}</p>
-					<p>Dose: {recipe.dose}g</p>
-					<p>Water: {recipe.water}g</p>
-					<p>Ratio: {recipe.ratio}</p>
+					<p>
+						{dict?.card?.brewer || "Brewer"}: {recipe.brewer}
+					</p>
+					<p>
+						{dict?.card?.dose || "Dose"}: {recipe.dose}g
+					</p>
+					<p>
+						{dict?.card?.water || "Water"}: {recipe.water}g
+					</p>
+					<p>
+						{dict?.card?.totalTime || "Total Time"}:{" "}
+						{(() => {
+							const totalSeconds =
+								(recipe.stages?.reduce(
+									(sum, stage) => sum + (Number(stage.duration) || 0),
+									0
+								) || 0) + Number(recipe.drainTime || 0);
+
+							const minutes = Math.floor(totalSeconds / 60);
+							const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+
+							return `${minutes}:${seconds}`;
+						})()}
+					</p>
 				</CardContent>
 			</Link>
 			<CardFooter className="flex justify-end space-x-2">
 				<Button variant="outline" onClick={() => onDuplicate(recipe.id)}>
-					Duplicate
+					{dict?.buttons?.dupe || "Duplicate"}
 				</Button>
 				<AlertDialog>
 					<AlertDialogTrigger asChild>
-						<Button variant="destructive">Remove</Button>
+						<Button variant="destructive">{dict?.buttons?.remove || "Remove"}</Button>
 					</AlertDialogTrigger>
 					<AlertDialogContent>
 						<AlertDialogHeader>
-							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+							<AlertDialogTitle>
+								{dict?.cardRemove?.title || "Are you absolutely sure?"}
+							</AlertDialogTitle>
 							<AlertDialogDescription>
-								This action cannot be undone. This will permanently delete your recipe.
+								{dict?.cardRemove?.desc ||
+									"This action cannot be undone. This will permanently delete your recipe."}
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogCancel>
+								{dict?.buttons?.cancel || "Cancel"}
+							</AlertDialogCancel>
 							<AlertDialogAction onClick={() => onDelete(recipe.id)}>
-								Delete
+								{dict?.buttons?.remove || "Delete"}
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>

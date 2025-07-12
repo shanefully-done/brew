@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFeedback } from "@/components/feedback-context";
+import { useLocale } from "@/hooks/use-locale";
 
 interface RecipeDetailViewProps {
 	id: string;
@@ -27,6 +28,7 @@ const VIBRANT_COLORS = [
 ];
 
 export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
+	const { dict } = useLocale();
 	const { recipes } = useRecipes();
 	const recipe = recipes.find((r) => r.id === id);
 
@@ -228,29 +230,36 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 			<CardContent>
 				<div className="grid grid-cols-2 gap-4 mb-4">
 					<p>
-						<strong>Brewer:</strong> {recipe.brewer || "N/A"}
+						<strong>{dict?.detail?.brewer || "Brewer"}:</strong>{" "}
+						{recipe.brewer || "N/A"}
 					</p>
 					<p>
-						<strong>Dose:</strong> {recipe.dose ? `${recipe.dose}g` : "N/A"}
+						<strong>{dict?.detail?.dosage || "Dose"}:</strong>{" "}
+						{recipe.dose ? `${recipe.dose}g` : "N/A"}
 					</p>
 					<p>
-						<strong>Water:</strong> {recipe.water ? `${recipe.water}ml` : "N/A"}
+						<strong>{dict?.detail?.water || "Water"}:</strong>{" "}
+						{recipe.water ? `${recipe.water}ml` : "N/A"}
 					</p>
 					<p>
-						<strong>Ratio:</strong> {recipe.ratio ? `1:${recipe.ratio}` : "N/A"}
+						<strong>{dict?.detail?.ratio || "Ratio"}:</strong>{" "}
+						{recipe.ratio ? `1:${recipe.ratio}` : "N/A"}
 					</p>
 					<p>
-						<strong>Temperature:</strong>{" "}
+						<strong>{dict?.detail?.temp || "Temperature"}:</strong>{" "}
 						{recipe.temperature ? `${recipe.temperature}°C` : "N/A"}
 					</p>
 					<p>
-						<strong>Grind Size:</strong> {recipe.grindSize || "N/A"}
+						<strong>{dict?.detail?.grind || "Grind Size"}:</strong>{" "}
+						{recipe.grindSize || "N/A"}
 					</p>
 				</div>
 
 				<Separator className="my-4" />
 
-				<h3 className="text-lg font-semibold mb-2">Timer</h3>
+				<h3 className="text-lg font-semibold mb-2">
+					{dict?.detail?.timer || "Timer"}
+				</h3>
 				<div className="text-center text-4xl font-bold mb-4">
 					{Math.floor(timeRemaining / 60)
 						.toString()
@@ -267,41 +276,46 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 				/>
 				<div className="flex justify-center space-x-2 mb-4">
 					<Button onClick={handleStart} disabled={isRunning || timeRemaining === 0}>
-						Start
+						{dict?.detail?.start || "Start"}
 					</Button>
 					<Button onClick={handlePause} disabled={!isRunning}>
-						Pause
+						{dict?.detail?.pause || "Pause"}
 					</Button>
-					<Button onClick={handleReset}>Reset</Button>
+					<Button onClick={handleReset}>{dict?.detail?.reset || "Reset"}</Button>
 					<Button
 						onClick={handleSkipStage}
 						disabled={
 							!isRunning || !recipe.stages || currentStageIndex >= recipe.stages.length
 						}
 					>
-						Skip Stage
+						{dict?.detail?.skip || "Skip Stage"}
 					</Button>
 				</div>
 
 				<Separator className="my-4" />
 
-				<h3 className="text-lg font-semibold mb-2">Current Stage</h3>
+				<h3 className="text-lg font-semibold mb-2">
+					{dict?.detail?.currStage || "Current Stage"}
+				</h3>
 				{currentStage ? (
 					<div>
 						<p>
-							<strong>Name:</strong> {currentStage.name}
+							<strong>{dict?.detail?.name || "Name"}:</strong> {currentStage.name}
 						</p>
 						<p>
-							<strong>Instructions:</strong> {currentStage.instructions}
+							<strong>{dict?.detail?.instruction || "Instructions"}:</strong>{" "}
+							{currentStage.instructions}
 						</p>
 					</div>
 				) : (
-					<p>No active stage.</p>
+					<p>{dict?.detail?.noStage || "No active stage."}</p>
 				)}
 
 				<Separator className="my-4" />
 
-				<h3 className="text-lg font-semibold mb-2">All Stages</h3>
+				<h3 className="text-lg font-semibold mb-2">
+					{dict?.detail?.allStage || "All Stages"}
+				</h3>
 				<ul>
 					{recipe.stages?.map((stage, index) => (
 						<li
@@ -318,13 +332,14 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 								currentStageIndex === recipe.stages?.length ? "font-bold" : ""
 							}
 						>
-							Drain ({recipe.drainTime}s): Allow to drain
+							{dict?.detail?.drain || "Drain"} ({recipe.drainTime}s):{" "}
+							{dict?.detail?.drainInstruction || "Allow to drain"}
 						</li>
 					)}
 				</ul>
 				<div className="flex justify-end mt-4">
 					<Link href={`/recipe/edit/${recipe.id}`}>
-						<Button>Edit Recipe</Button>
+						<Button>{dict?.recipe?.titleEdit || "Edit Recipe"}</Button>
 					</Link>
 				</div>
 			</CardContent>
