@@ -243,7 +243,7 @@ export const RecipeDetailView: React.FC<RecipeDetailViewProps> = ({ id }) => {
 					</p>
 					<p>
 						<strong>{dict?.detail?.ratio || "Ratio"}:</strong>{" "}
-						{recipe.ratio ? `1:${recipe.ratio}` : "N/A"}
+						{recipe.ratio ? `${recipe.ratio}` : "N/A"}
 					</p>
 					<p>
 						<strong>{dict?.detail?.temp || "Temperature"}:</strong>{" "}
