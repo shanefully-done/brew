@@ -10,7 +10,7 @@ export function Footer() {
 			</div>
 			<div className="flex items-center gap-4">
 				<Link
-					href="https://github.com/shanefully-done/miscalc"
+					href="https://github.com/shanefully-done/brew"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="text-sm text-muted-foreground hover:text-foreground transition-colors"
