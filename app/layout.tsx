@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { FeedbackProvider } from "@/components/feedback-context";
 
 const geistSans = Geist({
@@ -85,6 +86,7 @@ export default function RootLayout({
 						<div className="mx-auto p-4">
 							<Header />
 							{children}
+							<Footer />
 						</div>
 					</ThemeProvider>
 				</FeedbackProvider>
