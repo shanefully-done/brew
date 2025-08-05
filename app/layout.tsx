@@ -26,23 +26,14 @@ export const metadata: Metadata = {
 		siteName: "brew.",
 		images: [
 			{
-				url: "/og.png",
-				width: 1200,
-				height: 630,
+				url: "/preview.png",
+				width: 800,
+				height: 600,
 				alt: "brew. – coffee timer app",
 			},
 		],
 		locale: "en_US",
 		type: "website",
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: "brew.",
-		description: "A simple coffee recipe & timer app for home brewers.",
-		images: ["/og.png"],
-	},
-	icons: {
-		icon: "/favicon.svg",
 	},
 };
 
